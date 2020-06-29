@@ -7,7 +7,6 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using RadLibrary.Logging;
-using RadLibrary.Logging.InputExtension;
 
 #endregion
 
@@ -27,8 +26,8 @@ namespace QuizizzHack
 
             var id = logger.GetInput("Quizizz id:");
 
-            var wc = new WebClient();
-
+            var wc = new WebClient {Encoding = Encoding.UTF8};
+            
             var jsonData = wc.DownloadString("https://quizizz.com/quiz/" + id);
 
             var data = QuizizzData.FromJson(jsonData);
@@ -90,7 +89,7 @@ namespace QuizizzHack
 
             totalQuestions = string.Format(totalQuestions, i);
 
-            File.AppendAllText("answers.txt", totalQuestions);
+            File.AppendAllText("answers.txt", totalQuestions, Encoding.UTF8);
 
             logger.Warn("\n{0}\n\n\nEverything is done!", totalQuestions);
         }
