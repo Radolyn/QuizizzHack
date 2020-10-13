@@ -52,6 +52,8 @@ namespace QuizizzHack
 
         [JsonProperty("publishedVersion")] public string PublishedVersion { get; set; }
 
+        [JsonProperty("type")] public string Type { get; set; }
+
         [JsonProperty("_id")] public string Id { get; set; }
 
         [JsonProperty("info")] public Info Info { get; set; }
@@ -81,7 +83,7 @@ namespace QuizizzHack
 
         [JsonProperty("_id")] public string Id { get; set; }
 
-        [JsonProperty("country")] public object Country { get; set; }
+        [JsonProperty("country")] public string Country { get; set; }
 
         [JsonProperty("media")] public Uri Media { get; set; }
 
@@ -120,6 +122,8 @@ namespace QuizizzHack
 
     public class Info
     {
+        [JsonProperty("_id")] public string Id { get; set; }
+
         [JsonProperty("traits")] public Traits Traits { get; set; }
 
         [JsonProperty("pref")] public Pref Pref { get; set; }
@@ -128,27 +132,23 @@ namespace QuizizzHack
 
         [JsonProperty("visibility")] public bool Visibility { get; set; }
 
-        [JsonProperty("questions")] public List<Question> Questions { get; set; }
+        [JsonProperty("questions")] public Question[] Questions { get; set; }
 
-        [JsonProperty("subjects")] public List<string> Subjects { get; set; }
+        [JsonProperty("subjects")] public string[] Subjects { get; set; }
 
-        [JsonProperty("topics")] public List<string> Topics { get; set; }
+        [JsonProperty("topics")] public object[] Topics { get; set; }
 
-        [JsonProperty("subtopics")] public List<object> Subtopics { get; set; }
+        [JsonProperty("subtopics")] public object[] Subtopics { get; set; }
 
         [JsonProperty("grade")]
         [JsonConverter(typeof(DecodeArrayConverter))]
-        public List<long> Grade { get; set; }
+        public long[] Grade { get; set; }
 
         [JsonProperty("gradeLevel")] public object GradeLevel { get; set; }
 
         [JsonProperty("deleted")] public bool Deleted { get; set; }
 
-        [JsonProperty("standards")] public List<object> Standards { get; set; }
-
-        [JsonProperty("courses")] public List<Course> Courses { get; set; }
-
-        [JsonProperty("_id")] public string Id { get; set; }
+        [JsonProperty("standards")] public object[] Standards { get; set; }
 
         [JsonProperty("name")] public string Name { get; set; }
 
@@ -160,34 +160,15 @@ namespace QuizizzHack
 
         [JsonProperty("image")] public Uri Image { get; set; }
 
+        [JsonProperty("profane")] public bool Profane { get; set; }
+
         [JsonProperty("isProfane")] public bool IsProfane { get; set; }
 
         [JsonProperty("whitelisted")] public bool Whitelisted { get; set; }
-    }
 
-    public class Course
-    {
-        [JsonProperty("displayName")] public string DisplayName { get; set; }
+        [JsonProperty("cached")] public bool Cached { get; set; }
 
-        [JsonProperty("internalName")] public string InternalName { get; set; }
-
-        [JsonProperty("description")] public object Description { get; set; }
-
-        [JsonProperty("defaultGrade")] public object DefaultGrade { get; set; }
-
-        [JsonProperty("lowerGrade")] public long LowerGrade { get; set; }
-
-        [JsonProperty("upperGrade")] public long UpperGrade { get; set; }
-
-        [JsonProperty("_id")] public string Id { get; set; }
-
-        [JsonProperty("uniqueName")] public string UniqueName { get; set; }
-
-        [JsonProperty("internal")] public bool Internal { get; set; }
-
-        [JsonProperty("subject")] public long Subject { get; set; }
-
-        [JsonProperty("createdAt")] public DateTimeOffset CreatedAt { get; set; }
+        [JsonProperty("courses")] public object[] Courses { get; set; }
     }
 
     public class Pref
@@ -197,58 +178,63 @@ namespace QuizizzHack
 
     public class Question
     {
+        [JsonProperty("_id")] public string Id { get; set; }
+
         [JsonProperty("type")] public KindEnum Type { get; set; }
 
         [JsonProperty("published")] public bool Published { get; set; }
 
         [JsonProperty("structure")] public Structure Structure { get; set; }
 
-        [JsonProperty("standards")] public List<object> Standards { get; set; }
+        [JsonProperty("standards")] public object[] Standards { get; set; }
 
-        [JsonProperty("_id")] public string Id { get; set; }
+        [JsonProperty("topics")] public object[] Topics { get; set; }
 
         [JsonProperty("createdAt")] public DateTimeOffset CreatedAt { get; set; }
 
         [JsonProperty("updated")] public DateTimeOffset Updated { get; set; }
 
-        [JsonProperty("time")] public long Time { get; set; }
+        [JsonProperty("cached")] public bool Cached { get; set; }
 
-        [JsonProperty("cached", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? Cached { get; set; }
+        [JsonProperty("time")] public long Time { get; set; }
     }
 
     public class Structure
     {
+        [JsonProperty("settings")] public Settings Settings { get; set; }
+
+        [JsonProperty("explain", NullValueHandling = NullValueHandling.Ignore)]
+        public Explain Explain { get; set; }
+
         [JsonProperty("kind")] public KindEnum Kind { get; set; }
 
-        [JsonProperty("query")] public Query Query { get; set; }
+        [JsonProperty("query")] public Explain Query { get; set; }
 
-        [JsonProperty("options")] public List<Query> Options { get; set; }
+        [JsonProperty("options")] public Explain[] Options { get; set; }
 
         [JsonProperty("answer")] public Answer Answer { get; set; }
 
-        [JsonProperty("settings")] public Settings Settings { get; set; }
-
-        [JsonProperty("hasMath")] public bool? HasMath { get; set; }
+        [JsonProperty("hasMath", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? HasMath { get; set; }
     }
 
-    public class Query
+    public class Explain
     {
         [JsonProperty("math", NullValueHandling = NullValueHandling.Ignore)]
         public Math Math { get; set; }
 
-        [JsonProperty("type")] public QueryType? Type { get; set; }
+        [JsonProperty("type")] public MediaType? Type { get; set; }
 
-        [JsonProperty("hasMath")] public bool HasMath { get; set; }
-
-        [JsonProperty("media")] public List<Media> Media { get; set; }
+        [JsonProperty("hasMath")] public bool? HasMath { get; set; }
 
         [JsonProperty("text")] public string Text { get; set; }
+
+        [JsonProperty("media")] public Media[] Media { get; set; }
     }
 
     public class Math
     {
-        [JsonProperty("latex")] public List<object> Latex { get; set; }
+        [JsonProperty("latex")] public object[] Latex { get; set; }
 
         [JsonProperty("template")] public object Template { get; set; }
     }
@@ -259,8 +245,7 @@ namespace QuizizzHack
 
         [JsonProperty("url")] public Uri Url { get; set; }
 
-        [JsonProperty("meta", NullValueHandling = NullValueHandling.Ignore)]
-        public MediaMeta Meta { get; set; }
+        [JsonProperty("meta")] public MediaMeta Meta { get; set; }
     }
 
     public class MediaMeta
@@ -272,6 +257,16 @@ namespace QuizizzHack
         [JsonProperty("text")] public object Text { get; set; }
 
         [JsonProperty("bgColor")] public object BgColor { get; set; }
+
+        [JsonProperty("layout")] public object Layout { get; set; }
+
+        [JsonProperty("videoId")] public object VideoId { get; set; }
+
+        [JsonProperty("start")] public object Start { get; set; }
+
+        [JsonProperty("end")] public object End { get; set; }
+
+        [JsonProperty("duration")] public object Duration { get; set; }
     }
 
     public class Settings
@@ -283,6 +278,8 @@ namespace QuizizzHack
     {
         [JsonProperty("isQuizWithoutCorrectAnswer")]
         public bool IsQuizWithoutCorrectAnswer { get; set; }
+
+        [JsonProperty("totalSlides")] public long TotalSlides { get; set; }
     }
 
     public class Stats
@@ -303,35 +300,29 @@ namespace QuizizzHack
         [JsonProperty("version")] public string Version { get; set; }
     }
 
-    public enum KindEnum
-    {
-        Blank,
-        Mcq,
-        Msq
-    }
-
     public enum MediaType
     {
-        Image
+        Image,
+        Text
     }
 
-    public enum QueryType
+    public enum KindEnum
     {
-        Text,
-        TextImage
+        Mcq,
+        Msq
     }
 
     public struct Answer
     {
         public long? Integer;
-        public List<long> IntegerArray;
+        public long[] IntegerArray;
 
         public static implicit operator Answer(long Integer)
         {
             return new Answer {Integer = Integer};
         }
 
-        public static implicit operator Answer(List<long> IntegerArray)
+        public static implicit operator Answer(long[] IntegerArray)
         {
             return new Answer {IntegerArray = IntegerArray};
         }
@@ -362,9 +353,8 @@ namespace QuizizzHack
             Converters =
             {
                 AnswerConverter.Singleton,
-                KindEnumConverter.Singleton,
                 MediaTypeConverter.Singleton,
-                QueryTypeConverter.Singleton,
+                KindEnumConverter.Singleton,
                 new IsoDateTimeConverter {DateTimeStyles = DateTimeStyles.AssumeUniversal}
             },
         };
@@ -372,9 +362,11 @@ namespace QuizizzHack
 
     internal class DecodeArrayConverter : JsonConverter
     {
+        public static readonly DecodeArrayConverter Singleton = new DecodeArrayConverter();
+
         public override bool CanConvert(Type t)
         {
-            return t == typeof(List<long>);
+            return t == typeof(long[]);
         }
 
         public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
@@ -389,12 +381,12 @@ namespace QuizizzHack
                 reader.Read();
             }
 
-            return value;
+            return value.ToArray();
         }
 
         public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
         {
-            var value = (List<long>) untypedValue;
+            var value = (long[]) untypedValue;
             writer.WriteStartArray();
             foreach (var arrayItem in value)
             {
@@ -404,12 +396,12 @@ namespace QuizizzHack
 
             writer.WriteEndArray();
         }
-
-        public static readonly DecodeArrayConverter Singleton = new DecodeArrayConverter();
     }
 
     internal class ParseStringConverter : JsonConverter
     {
+        public static readonly ParseStringConverter Singleton = new ParseStringConverter();
+
         public override bool CanConvert(Type t)
         {
             return t == typeof(long) || t == typeof(long?);
@@ -435,12 +427,12 @@ namespace QuizizzHack
             var value = (long) untypedValue;
             serializer.Serialize(writer, value.ToString());
         }
-
-        public static readonly ParseStringConverter Singleton = new ParseStringConverter();
     }
 
     internal class AnswerConverter : JsonConverter
     {
+        public static readonly AnswerConverter Singleton = new AnswerConverter();
+
         public override bool CanConvert(Type t)
         {
             return t == typeof(Answer) || t == typeof(Answer?);
@@ -454,7 +446,7 @@ namespace QuizizzHack
                     var integerValue = serializer.Deserialize<long>(reader);
                     return new Answer {Integer = integerValue};
                 case JsonToken.StartArray:
-                    var arrayValue = serializer.Deserialize<List<long>>(reader);
+                    var arrayValue = serializer.Deserialize<long[]>(reader);
                     return new Answer {IntegerArray = arrayValue};
             }
 
@@ -478,12 +470,59 @@ namespace QuizizzHack
 
             throw new Exception("Cannot marshal type Answer");
         }
+    }
 
-        public static readonly AnswerConverter Singleton = new AnswerConverter();
+    internal class MediaTypeConverter : JsonConverter
+    {
+        public static readonly MediaTypeConverter Singleton = new MediaTypeConverter();
+
+        public override bool CanConvert(Type t)
+        {
+            return t == typeof(MediaType) || t == typeof(MediaType?);
+        }
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "image":
+                    return MediaType.Image;
+                case "text":
+                    return MediaType.Text;
+            }
+
+            throw new Exception("Cannot unmarshal type MediaType");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+
+            var value = (MediaType) untypedValue;
+            switch (value)
+            {
+                case MediaType.Image:
+                    serializer.Serialize(writer, "image");
+                    return;
+                case MediaType.Text:
+                    serializer.Serialize(writer, "text");
+                    return;
+            }
+
+            throw new Exception("Cannot marshal type MediaType");
+        }
     }
 
     internal class KindEnumConverter : JsonConverter
     {
+        public static readonly KindEnumConverter Singleton = new KindEnumConverter();
+
         public override bool CanConvert(Type t)
         {
             return t == typeof(KindEnum) || t == typeof(KindEnum?);
@@ -495,8 +534,6 @@ namespace QuizizzHack
             var value = serializer.Deserialize<string>(reader);
             switch (value)
             {
-                case "BLANK":
-                    return KindEnum.Blank;
                 case "MCQ":
                     return KindEnum.Mcq;
                 case "MSQ":
@@ -517,9 +554,6 @@ namespace QuizizzHack
             var value = (KindEnum) untypedValue;
             switch (value)
             {
-                case KindEnum.Blank:
-                    serializer.Serialize(writer, "BLANK");
-                    return;
                 case KindEnum.Mcq:
                     serializer.Serialize(writer, "MCQ");
                     return;
@@ -530,90 +564,5 @@ namespace QuizizzHack
 
             throw new Exception("Cannot marshal type KindEnum");
         }
-
-        public static readonly KindEnumConverter Singleton = new KindEnumConverter();
-    }
-
-    internal class MediaTypeConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t)
-        {
-            return t == typeof(MediaType) || t == typeof(MediaType?);
-        }
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            if (value == "image") return MediaType.Image;
-            throw new Exception("Cannot unmarshal type MediaType");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-
-            var value = (MediaType) untypedValue;
-            if (value == MediaType.Image)
-            {
-                serializer.Serialize(writer, "image");
-                return;
-            }
-
-            throw new Exception("Cannot marshal type MediaType");
-        }
-
-        public static readonly MediaTypeConverter Singleton = new MediaTypeConverter();
-    }
-
-    internal class QueryTypeConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t)
-        {
-            return t == typeof(QueryType) || t == typeof(QueryType?);
-        }
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case "text":
-                    return QueryType.Text;
-                case "text-image":
-                    return QueryType.TextImage;
-            }
-
-            throw new Exception("Cannot unmarshal type QueryType");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-
-            var value = (QueryType) untypedValue;
-            switch (value)
-            {
-                case QueryType.Text:
-                    serializer.Serialize(writer, "text");
-                    return;
-                case QueryType.TextImage:
-                    serializer.Serialize(writer, "text-image");
-                    return;
-            }
-
-            throw new Exception("Cannot marshal type QueryType");
-        }
-
-        public static readonly QueryTypeConverter Singleton = new QueryTypeConverter();
     }
 }

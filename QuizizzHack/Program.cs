@@ -27,7 +27,7 @@ namespace QuizizzHack
             var id = logger.GetInput("Quizizz id:");
 
             var wc = new WebClient {Encoding = Encoding.UTF8};
-            
+
             var jsonData = wc.DownloadString("https://quizizz.com/quiz/" + id);
 
             var data = QuizizzData.FromJson(jsonData);
